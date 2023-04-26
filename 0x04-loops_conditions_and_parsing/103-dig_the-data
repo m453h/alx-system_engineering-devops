@@ -3,4 +3,4 @@
 # HTTP status code from the Apache log file.
 # The script groups visitors by IP and HTTP status code, and displays this data in the
 # OCCURENCE_NUMBER IP HTTP_CODE
-awk '{ arr[$1 " " $9]++ } END { for (i in arr) print arr[i], i }' apache-access.log | sort -rn 
+awk '{ print $1, $9}' apache-access.log | sort | uniq -c | sort -rn
