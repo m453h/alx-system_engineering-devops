@@ -7,6 +7,6 @@
 #    that contains the string Hello World!
 apt-get update
 apt-get -y install nginx
-ufw allow 'nginx http'
+ufw allow 'Nginx HTTP'
 echo "Hello World!" > /var/www/html/index.html
 service nginx start
