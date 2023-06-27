@@ -16,6 +16,7 @@ exec {'set_hello_world_page':
 
 exec {'redirect_page':
   command => 'sudo sed -i "47i rewrite ^/redirect_me https://google.com permanent;" /etc/nginx/sites-available/default',
+  provider => shell,
 }
 
 exec {'run':
