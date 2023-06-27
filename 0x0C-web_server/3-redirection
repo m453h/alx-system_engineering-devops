@@ -6,7 +6,7 @@
 #    (requesting a page) using curl, it must return a page 
 #    that contains the string Hello World!
 # 3. /redirect me redirects to another page
-#sudo apt-get update
+sudo apt-get update
 sudo apt-get -y install nginx
 sudo ufw allow 'nginx http'
 sudo ufw reload
@@ -20,7 +20,7 @@ echo "server {
 	index index.html index.htm index.nginx-debian.html;
 	server_name _;
 	location / {
-		try_files $uri $uri/ =404;
+		try_files \$uri \$uri/ =404;
 	}
 	location /redirect_me {
         	return 301 https://google.com;
