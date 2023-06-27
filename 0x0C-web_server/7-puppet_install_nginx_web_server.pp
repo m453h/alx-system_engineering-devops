@@ -14,6 +14,27 @@ exec {'set_hello_world_page':
   provider => shell,
 }
 
+file { '/etc/nginx/sites-available/default':
+  ensure  => file,
+  content => "server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    root /var/www/html;
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name _;
+
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+
+    location /redirect_me {
+        return 301 https://google.com;
+    }
+  }",
+  notify  => Service['nginx'],
+}
+
 exec {'run':
   command  => 'sudo service nginx restart',
   provider => shell,
