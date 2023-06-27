@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# This script starts Apache server as part of
+# the 0x0D. Web stack debugging #0 project
+sudo service apache2 start
