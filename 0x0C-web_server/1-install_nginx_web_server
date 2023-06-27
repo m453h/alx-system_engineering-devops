@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Installs web server
+# Requirements:
+# 1. Nginx should be listening on port 80
+# 2. When querying Nginx at its root / with a GET request
+#    (requesting a page) using curl, it must return a page 
+#    that contains the string Hello World!
+apt-get update
+apt-get -y install nginx
+ufw allow 'nginx http'
+echo "Hello World!" > /var/www/html/index.html
+service nginx start
