@@ -5,8 +5,9 @@
 # 2. When querying Nginx at its root / with a GET request
 #    (requesting a page) using curl, it must return a page 
 #    that contains the string Hello World!
-apt-get update
-apt-get -y install nginx
-ufw allow 'Nginx HTTP'
+sudo apt-get update
+sudo apt-get -y install nginx
+sudo ufw allow 'nginx http'
+sudo ufw reload
 echo "Hello World!" > /var/www/html/index.html
-service nginx start
+sudo service nginx start
