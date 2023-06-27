@@ -13,3 +13,8 @@ exec {'set_hello_world_page':
   command  => 'echo "Hello World!" | sudo tee /var/www/html/index.html',
   provider => shell,
 }
+
+exec {'run':
+  command  => 'sudo service nginx restart',
+  provider => shell,
+}
