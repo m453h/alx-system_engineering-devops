@@ -15,7 +15,7 @@ exec {'set_hello_world_page':
 }
 
 exec { 'configure_nginx':
-  command  => "echo 'server {
+  command => "echo 'server {
     listen 80 default_server;
     listen [::]:80 default_server;
     root /var/www/html;
@@ -31,11 +31,12 @@ exec { 'configure_nginx':
         return 301 https://google.com;
     }
 }' > /etc/nginx/sites-available/default",
-  path     => '/bin:/usr/bin',
-  creates  => '/etc/nginx/sites-available/default',
-  require  => Package['nginx'],
-  notify   => Service['nginx'],
+  path    => '/bin:/usr/bin',
+  creates => '/etc/nginx/sites-available/default',
+  require => Package['nginx'],
+  notify  => Service['nginx'],
 }
+
 
 exec {'run':
   command  => 'sudo service nginx restart',
