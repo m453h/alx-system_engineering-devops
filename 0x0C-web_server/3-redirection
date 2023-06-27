@@ -6,14 +6,14 @@
 #    (requesting a page) using curl, it must return a page 
 #    that contains the string Hello World!
 # 3. /redirect me redirects to another page
-sudo apt-get update
+#sudo apt-get update
 sudo apt-get -y install nginx
 sudo ufw allow 'nginx http'
 sudo ufw reload
 sudo chmod 755 -R /var/www/html
 echo "Hello World!" > /var/www/html/index.html
 sudo service nginx start
-sudo echo "server {
+echo "server {
 	listen 80 default_server;
 	listen [::]:80 default_server;
 	root /var/www/html;
