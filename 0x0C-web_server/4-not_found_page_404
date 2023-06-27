@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Configure your Nginx server to have a custom 404 
+# page that contains the string Ceci n'est pas une page
+sudo apt-get update
+sudo apt-get -y install nginx
+sudo ufw allow 'nginx http'
+sudo ufw reload
+sudo chmod 755 -R /var/www/html
+echo "Hello World!" > /var/www/html/index.html
+echo "Ceci n'est pas une page" > /var/www/html/404.html
+sudo service nginx start
+sudo echo "server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+	root /var/www/html;
+	index index.html index.htm index.nginx-debian.html;
+	server_name _;
+	location / {
+		try_files $uri $uri/ =404;
+	}
+
+	location /redirect_me {
+        	return 301 https://google.com;
+    	}
+
+    	error_page 404 /404.html;
+        location  /404.html {
+            internal;
+        }
+}
+" > /etc/nginx/sites-available/default
+sudo service nginx restart
