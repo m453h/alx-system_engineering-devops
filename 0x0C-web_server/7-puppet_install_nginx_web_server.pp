@@ -14,29 +14,9 @@ exec {'set_hello_world_page':
   provider => shell,
 }
 
-exec { 'configure_nginx':
-  command => "echo 'server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
-    root /var/www/html;
-    index index.html index.htm index.nginx-debian.html;
-
-    server_name _;
-
-    location / {
-        try_files \$uri \$uri/ =404;
-    }
-
-    location /redirect_me {
-        return 301 https://google.com;
-    }
-}' > /etc/nginx/sites-available/default",
-  path    => '/bin:/usr/bin',
-  creates => '/etc/nginx/sites-available/default',
-  require => Package['nginx'],
-  notify  => Service['nginx'],
+exec {'redirect_page':
+  command => 'sudo sed -i "47i rewrite ^/redirect_me https://google.com permanent;" /etc/nginx/sites-available/default',
 }
-
 
 exec {'run':
   command  => 'sudo service nginx restart',
