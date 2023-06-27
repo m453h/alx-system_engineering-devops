@@ -12,8 +12,13 @@ sudo ufw allow 'nginx http'
 sudo ufw reload
 sudo chown -R ubuntu:ubuntu /var/www/html/
 echo "Hello World!" > /var/www/html/index.html
-sudo service nginx start
-sudo echo "location /redirect_me {" | sudo tee /etc/nginx/conf.d/redirect.conf > /dev/null
-sudo echo "    return 301 https://github.com/m453h;" | sudo tee -a /etc/nginx/conf.d/redirect.conf > /dev/null
-sudo echo "}" | sudo tee -a /etc/nginx/conf.d/redirect.conf > /dev/null
+sudo echo "server {
+    listen 80;
+    listen [::]:80 default_server;
+    root   /etc/nginx/html;
+    index  index.html;
+    location /redirect_me {
+        return 301 https://github.com/m453h;
+    }
+}" > /etc/nginx/sites-available/default
 sudo service nginx restart
