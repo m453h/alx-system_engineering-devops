@@ -14,9 +14,8 @@ exec {'set_hello_world_page':
   provider => shell,
 }
 
-file { '/etc/nginx/sites-available/default':
-  ensure  => file,
-  content => "server {
+exec { 'configure_nginx':
+  command  => "echo 'server {
     listen 80 default_server;
     listen [::]:80 default_server;
     root /var/www/html;
@@ -31,8 +30,11 @@ file { '/etc/nginx/sites-available/default':
     location /redirect_me {
         return 301 https://google.com;
     }
-  }",
-  notify  => Service['nginx'],
+}' > /etc/nginx/sites-available/default",
+  path     => '/bin:/usr/bin',
+  creates  => '/etc/nginx/sites-available/default',
+  require  => Package['nginx'],
+  notify   => Service['nginx'],
 }
 
 exec {'run':
