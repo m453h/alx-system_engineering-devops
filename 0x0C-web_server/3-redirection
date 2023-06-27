@@ -10,15 +10,21 @@ sudo apt-get update
 sudo apt-get -y install nginx
 sudo ufw allow 'nginx http'
 sudo ufw reload
-sudo chown -R ubuntu:ubuntu /var/www/html/
+sudo chmod 755 -R /var/www/html
 echo "Hello World!" > /var/www/html/index.html
+sudo service nginx start
 sudo echo "server {
-    listen 80;
-    listen [::]:80 default_server;
-    root   /etc/nginx/html;
-    index  index.html;
-    location /redirect_me {
-        return 301 https://github.com/m453h;
-    }
-}" > /etc/nginx/sites-available/default
+	listen 80 default_server;
+	listen [::]:80 default_server;
+	root /var/www/html;
+	index index.html index.htm index.nginx-debian.html;
+	server_name _;
+	location / {
+		try_files $uri $uri/ =404;
+	}
+	location /redirect_me {
+        	return 301 https://google.com;
+    	}
+}
+" > /etc/nginx/sites-available/default
 sudo service nginx restart
