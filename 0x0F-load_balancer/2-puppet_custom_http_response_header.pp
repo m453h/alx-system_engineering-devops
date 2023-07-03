@@ -1,37 +1,29 @@
 # Installs Nginx web server using Puppet
-
+$my_host = $facts['networking']['hostname']
 package {'nginx':
   ensure => 'present',
 }
-
-exec {'allow_nginx_through_firewall':
+->exec {'allow_nginx_through_firewall':
   command  => 'ufw allow \'nginx http\' ; ufw reload',
   provider => shell,
 }
-
-exec {'set_var_www_html_permissions':
+->exec {'set_var_www_html_permissions':
   command  => 'chmod 755 -R /var/www/html',
   provider => shell,
 }
-
-exec {'set_hello_world_page':
+->exec {'set_hello_world_page':
   command  => 'echo "Hello World!" | tee /var/www/html/index.html',
   provider => shell,
 }
-
-exec {'set_404_page':
+->exec {'set_404_page':
   command  => 'echo "Ceci n\'est pas une page" | tee /var/www/html/404.html',
   provider => shell,
 }
-
-exec {'start_nginx':
+->exec {'start_nginx':
   command  => 'service nginx start',
   provider => shell,
 }
-
-$my_host = $facts['networking']['hostname']
-
-file { '/etc/nginx/sites-available/default':
+->file { '/etc/nginx/sites-available/default':
   ensure  => file,
   content => "
     server {
@@ -59,8 +51,7 @@ file { '/etc/nginx/sites-available/default':
     }
   ",
 }
-
-exec {'run':
+->exec {'run':
   command  => 'service nginx restart',
   provider => shell,
 }
