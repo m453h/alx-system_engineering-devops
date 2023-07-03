@@ -5,7 +5,7 @@ package {'nginx':
 }
 
 exec {'install_nginx_web_server':
-  command  => 'sudo apt-get update ; sudo apt-get -y install nginx',
+  command  => 'apt-get update ; apt-get -y install nginx',
   provider => shell,
 }
 
@@ -16,12 +16,12 @@ file { '/var/www/html':
 }
 
 exec {'set_hello_world_page':
-  command  => 'echo "Hello World!" | sudo tee /var/www/html/index.html',
+  command  => 'echo "Hello World!" | tee /var/www/html/index.html',
   provider => shell,
 }
 
 exec {'set_404_page':
-  command  => 'echo "Ceci n\'est pas une page" | sudo tee /var/www/html/404.html',
+  command  => 'echo "Ceci n\'est pas une page" | tee /var/www/html/404.html',
   provider => shell,
 }
 
