@@ -4,27 +4,14 @@ package {'nginx':
   ensure => 'present',
 }
 
-exec {'install_nginx_web_server':
-  command  => 'apt-get update ; apt-get -y install nginx',
+exec {'allow_nginx_through_firewall':
+  command  => 'ufw allow \'nginx http\' ; ufw reload',
   provider => shell,
 }
 
-exec { 'ufw-allow-http':
-  command => '/usr/sbin/ufw allow "nginx http"',
-  path    => '/usr/bin:/usr/sbin:/bin',
-  require => Package['nginx'],
-}
-
-exec { 'ufw-reload':
-  command => '/usr/sbin/ufw reload',
-  path    => '/usr/bin:/usr/sbin:/bin',
-  require => Exec['ufw-allow-http'],
-}
-
-file { '/var/www/html':
-  ensure => 'directory',
-  mode   => '0755',
-  recurse => true,
+exec {'set_var_www_html_permissions':
+  command  => 'chmod 755 -R /var/www/html',
+  provider => shell,
 }
 
 exec {'set_hello_world_page':
@@ -34,6 +21,11 @@ exec {'set_hello_world_page':
 
 exec {'set_404_page':
   command  => 'echo "Ceci n\'est pas une page" | tee /var/www/html/404.html',
+  provider => shell,
+}
+
+exec {'start_nginx':
+  command  => 'service nginx start',
   provider => shell,
 }
 
