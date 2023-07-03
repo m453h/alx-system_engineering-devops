@@ -9,6 +9,18 @@ exec {'install_nginx_web_server':
   provider => shell,
 }
 
+exec { 'ufw-allow-http':
+  command => '/usr/sbin/ufw allow "nginx http"',
+  path    => '/usr/bin:/usr/sbin:/bin',
+  require => Package['nginx'],
+}
+
+exec { 'ufw-reload':
+  command => '/usr/sbin/ufw reload',
+  path    => '/usr/bin:/usr/sbin:/bin',
+  require => Exec['ufw-allow-http'],
+}
+
 file { '/var/www/html':
   ensure => 'directory',
   mode   => '0755',
