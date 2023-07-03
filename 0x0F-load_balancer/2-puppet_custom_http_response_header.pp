@@ -4,7 +4,7 @@ package {'nginx':
   ensure => 'present',
 }
 ->exec {'redirect_page':
-  command  => "sudo sed -i \"12i add_header X-Served-By '${my_host}';\" /etc/nginx/sites-available/default",
+  command  => "sudo sed -i \"25i add_header X-Served-By ${my_host};\" /etc/nginx/sites-available/default",
   provider => shell,
 }
 ->exec {'run':
