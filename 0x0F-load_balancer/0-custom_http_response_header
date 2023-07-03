@@ -8,6 +8,7 @@ sudo chmod 755 -R /var/www/html
 echo "Hello World!" > /var/www/html/index.html
 echo "Ceci n'est pas une page" > /var/www/html/404.html
 sudo service nginx start
+hostname=$(hostname)
 echo "server {
 	listen 80 default_server;
 	listen [::]:80 default_server;
