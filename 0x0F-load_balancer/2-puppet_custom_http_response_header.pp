@@ -9,6 +9,12 @@ exec {'install_nginx_web_server':
   provider => shell,
 }
 
+file { '/var/www/html':
+  ensure => 'directory',
+  mode   => '0755',
+  recurse => true,
+}
+
 exec {'set_hello_world_page':
   command  => 'echo "Hello World!" | sudo tee /var/www/html/index.html',
   provider => shell,
