@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# This script changes the default port Nginx is listening to from 8080 to 80
+sed 's/8080/80/' /etc/nginx/sites-available/default > /etc/nginx/sites-available/default_tmp
+mv /etc/nginx/sites-available/default_tmp /etc/nginx/sites-available/default
+mv /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+sudo service nginx restart
