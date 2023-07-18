@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
 # This script runs the whoami command under the user passed as an argument
 # It works for different users, Usage: ./0-iamsomeoneelse <user>
-su "$1" -s /bin/bash -c 'whoami'
+if [ -z "$1" ]; then
+  whoami
+else
+  sudo -u "$1" whoami	
+fi
