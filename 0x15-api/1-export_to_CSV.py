@@ -11,9 +11,9 @@ The script exports data of the employee's todo  in the CSV format:
     -"USER_ID","USERNAME","TASK_COMPLETED_STATUS","TASK_TITLE"
     -Saves them in a file USER_ID.csv
 """
+import csv
 import requests
 import sys
-import csv
 
 
 if __name__ == "__main__":
@@ -37,8 +37,8 @@ if __name__ == "__main__":
                     data.append([
                         task.get("userId"),
                         user.get("username"),
-                        task.get("title"),
-                        str(task.get("completed"))
+                        str(task.get("completed")),
+                        task.get("title")
                     ])
             if data:
                 with open('{}.csv'.format(q), 'w', encoding='UTF8') as f:
