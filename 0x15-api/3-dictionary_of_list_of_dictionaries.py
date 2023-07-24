@@ -6,7 +6,6 @@ returns information about their TODO list progress.
 
 Usage: ./3-dictionary_of_list_of_dictionaries.py
 
-The script accepts an integer as a parameter, which is the employee ID
 The script exports data of the employee's todo  in the JSON format:
     {"USER_ID":
     [{"task": "TASK_TITLE", "completed": TASK_COMPLETED_STATUS,
