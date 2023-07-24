@@ -41,8 +41,8 @@ if __name__ == "__main__":
                 if task.get("userId") == user.get("id"):
                     data.append({
                         "task": task.get("title"),
-                        "completed": str(task.get("completed")),
-                        "username": user.get("username")
+                        "completed": task.get("completed"),
+                        "username": user.get("username"),
                     })
             if data:
                 json_data = {user.get("id"): data}
