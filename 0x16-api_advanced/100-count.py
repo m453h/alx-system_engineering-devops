@@ -36,36 +36,34 @@ def count_words(subreddit, word_list, hot_list=[], after=""):
                                 params={'limit': 100,
                                         'after': after})
 
-        if response.status_code == 404:
-            return None
-        results = response.json()
-        top_posts = results.get('data').get('children')
+        if response.status_code == 200:
+            results = response.json()
+            top_posts = results.get('data').get('children')
 
-        for post in top_posts:
-            hot_list.append(post.get('data').get('title'))
+            for post in top_posts:
+                hot_list.append(post.get('data').get('title'))
 
-        after = results.get('data').get('after')
+            after = results.get('data').get('after')
 
-        if after is None:
-            keywords_dict = {}
-            for word in word_list:
-                word = word.lower()
-                for post_title in hot_list:
-                    count = count_occurence(word, post_title)
-                    if count > 0:
-                        if keywords_dict.get(word):
-                            keywords_dict[word] += count
-                        else:
-                            keywords_dict[word] = count
+            if after is None:
+                keywords_dict = {}
+                for word in word_list:
+                    word = word.lower()
+                    for post_title in hot_list:
+                        count = count_occurence(word, post_title)
+                        if count > 0:
+                            if keywords_dict.get(word):
+                                keywords_dict[word] += count
+                            else:
+                                keywords_dict[word] = count
 
-            sorted_dict = sorted(keywords_dict.items(),
-                                 key=lambda item: (-item[1], item[0]))
+                sorted_dict = sorted(keywords_dict.items(),
+                                     key=lambda item: (-item[1], item[0]))
 
-            for key, value in sorted_dict:
-                print("{}: {}".format(key, value))
-        else:
-            return count_words(subreddit, word_list, hot_list, after)
-
+                for key, value in sorted_dict:
+                    print("{}: {}".format(key, value))
+            else:
+                return count_words(subreddit, word_list, hot_list, after)
     except Exception:
         return None
 
