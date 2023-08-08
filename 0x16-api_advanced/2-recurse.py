@@ -28,6 +28,7 @@ def recurse(subreddit, hot_list=[], after=""):
 
     try:
         response = requests.get(url, headers=user_agent,
+                                allow_redirects=False,
                                 params={'limit': 100,
                                         'after': after})
 
