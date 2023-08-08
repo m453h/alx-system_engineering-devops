@@ -51,6 +51,7 @@ def count_words(subreddit, word_list, hot_list=[], after=""):
         else:
             keywords_dict = {}
             for word in word_list:
+                word = word.lower()
                 for post_title in hot_list:
                     count = count_occurence(word, post_title)
                     if count > 0:
@@ -83,6 +84,6 @@ def count_occurence(key, title):
     words = title.split()
     count = 0
     for word in words:
-        if key.lower() == word.lower():
+        if key == word.lower():
             count += 1
     return count
