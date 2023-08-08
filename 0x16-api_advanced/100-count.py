@@ -60,10 +60,10 @@ def count_words(subreddit, word_list, hot_list=[], after=""):
                         else:
                             keywords_dict[word] = count
 
-            sorted_dict = dict(sorted(keywords_dict.items(),
-                               key=lambda item: (-item[1], item[0])))
+            sorted_dict = sorted(keywords_dict.items(),
+                                 key=lambda item: (-item[1], item[0]))
 
-            for key, value in sorted_dict.items():
+            for key, value in sorted_dict:
                 print("{}: {}".format(key, value))
 
     except Exception:
