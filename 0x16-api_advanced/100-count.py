@@ -46,9 +46,7 @@ def count_words(subreddit, word_list, hot_list=[], after=""):
 
         after = results.get('data').get('after')
 
-        if after is not None:
-            return count_words(subreddit, word_list, hot_list, after)
-        else:
+        if after is None:
             keywords_dict = {}
             for word in word_list:
                 word = word.lower()
@@ -65,6 +63,8 @@ def count_words(subreddit, word_list, hot_list=[], after=""):
 
             for key, value in sorted_dict:
                 print("{}: {}".format(key, value))
+        else:
+            return count_words(subreddit, word_list, hot_list, after)
 
     except Exception:
         return None
@@ -84,6 +84,6 @@ def count_occurence(key, title):
     words = title.split()
     count = 0
     for word in words:
-        if key == word.lower():
+        if key.lower() == word.lower():
             count += 1
     return count
