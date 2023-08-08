@@ -27,7 +27,8 @@ def number_of_subscribers(subreddit):
      Chrome/17.0.821.0 Safari/538.0.0'}
 
     try:
-        response = requests.get(url, headers=user_agent)
+        response = requests.get(url, headers=user_agent,
+                                allow_redirects=False)
         results = response.json()
         return results.get('data').get('subscribers')
     except Exception:

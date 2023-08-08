@@ -28,6 +28,7 @@ def top_ten(subreddit):
 
         try:
             response = requests.get(url, headers=user_agent,
+                                    allow_redirects=False,
                                     params={'limit': 10})
             results = response.json()
             top_posts = results.get('data').get('children')
