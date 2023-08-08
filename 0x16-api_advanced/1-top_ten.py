@@ -27,7 +27,8 @@ def top_ten(subreddit):
          Chrome/17.0.821.0 Safari/538.0.0'}
 
         try:
-            response = requests.get(url, headers=user_agent)
+            response = requests.get(url, headers=user_agent,
+                                    params={'limit': 10})
             results = response.json()
             top_posts = results.get('data').get('children')
 
