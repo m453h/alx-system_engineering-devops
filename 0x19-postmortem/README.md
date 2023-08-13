@@ -1,4 +1,5 @@
 # Postmortem report for services outage incident on 13th August 2023
+![meme](https://raw.githubusercontent.com/m453h/alx-system_engineering-devops/main/0x19-postmortem/img.png)
 
 ## Issue summary
 
