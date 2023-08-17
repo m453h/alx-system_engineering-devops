@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 # This script gracefully reloads Gunicorn
-
-ps aux | grep gunicorn | sed -n '2p' | xargs kill -HUP
+pgrep gunicorn | xargs -r kill -HUP
