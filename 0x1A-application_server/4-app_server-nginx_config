@@ -1,0 +1,33 @@
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        server_name _;
+
+        add_header X-Served-By 197844-web-01;
+
+        location / {
+                try_files $uri $uri/ =404;
+        }
+
+        location /airbnb-onepage/ {
+                include proxy_params;
+                proxy_pass http://localhost:5000/airbnb-onepage/;
+        }
+
+ 	location ~ /airbnb-dynamic/number_odd_or_even/(\d+) {
+		rewrite ^/airbnb-dynamic/(.*) $1 break;
+        	include proxy_params;
+		proxy_pass http://127.0.0.1:5001;
+    	}
+
+	location /api/ {
+		include proxy_params;
+		proxy_pass http://localhost:5002/api/;
+	}
+
+        error_page 404 /404.html;
+                location  /404.html {
+                        internal;
+         }
+}
